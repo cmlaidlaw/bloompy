@@ -48,7 +48,7 @@ class BloomFilter(object):
         Adds an item to the Bloom Filter
         """
         if self._item_count == self._capacity:
-            raise OverflowError('Exceeding the specified capacity will result in an unacceptable false-positive rate.')
+            raise StandardError('Exceeding the specified capacity will result in an unacceptable false-positive rate.')
         keys = self._hash_item(item)
         for key in keys:
             self._set_bit(int(key, 16) % self._filter_size)
@@ -165,7 +165,7 @@ class BloomFilterTests(unittest.TestCase):
         filter = BloomFilter(capacity=1024)
         for x in range(1024):
             filter.add(x)
-        self.failUnlessRaises(OverflowError, filter.add, 1024)
+        self.failUnlessRaises(StandardError, filter.add, 1024)
 
     def test_11_normal_operation_stays_within_maximum_error(self):
         inserted = 0
